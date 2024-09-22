@@ -280,13 +280,13 @@ Please ensure to back up all the files securely.
 
 ![image](https://hackmd.io/_uploads/H1qw0dTTR.png)
 
-Return to the web browser acknowledge the statement about validator deposits (although, for the moment, that's not been done yet), and click on Register Validator.
+Return to the web browser and acknowledge the statement about validator deposits (although, for the moment, that's not been done yet), and then click on the `Register Validator` button.
 
 ![image](https://hackmd.io/_uploads/Hy0I6_paR.png)
 
 Select the validators you are about to register and click on the `Next` button.
 
-*Note: there is a limit of 20 validators you can register in a single transaction when connected with `Wallet Connect` This is due to limitations of the `Safe` Wallet. For this reason, if you need to register more than 20 validators from a single keyshares.json file, you will need to repeat the procedure above, without actually executing the DKG ceremony, and upload the same `keyshares.json` file multiple times. The SSV WebApp will recognize previously registered validators "automagically", and skip them.*
+*Note: there is a limit of 20 validators you can register in a single transaction. This is due to limitations of the `Safe` Wallet. For this reason, if you need to register more than 20 validators from a single `keyshares.json` file, you will need to repeat the procedure above, without actually executing the DKG ceremony, and upload the same `keyshares.json` file multiple times. The `SSV` web app will recognize previously registered validators "automagically", and skip them.*
 
 ![image](https://hackmd.io/_uploads/r1zaZKaa0.png)
 
@@ -294,7 +294,7 @@ On the funding screen select for how long the cluster will be running and click 
 
 *Note: To obtain SSV tokens on the Holesky network the official SSV [faucet](https://faucet.ssv.network/) can be used.*
 
-![image](https://hackmd.io/_uploads/Hy_-EFTpA.png)docker compose up 
+![image](https://hackmd.io/_uploads/Hy_-EFTpA.png)
 
 Acknowledge and accept the warning regarding cluster balances and fees and click on the `Next` button.
 
@@ -440,6 +440,6 @@ You can follow [this](https://dvt-homestaker.stakesaurus.com/bonded-validators-s
 
 ## Exiting Validators
 
-You can use the SSV [web](https://app.ssv.network/) app.
+You can use the [SSV](https://app.ssv.network/) web app to exit the validators.
 
 ![image](https://hackmd.io/_uploads/B13GR56p0.png)
