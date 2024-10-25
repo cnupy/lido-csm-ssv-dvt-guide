@@ -422,7 +422,7 @@ Expand the `Specify custom addresses` section...
 
 ![image](https://hackmd.io/_uploads/Syj0MCOeyg.png)
 
-Set the `Reward Address` field to the `Split` contract address and the `Manager Address` field to the `Safe` wallet address. Check that the correct addresses are set and click the `Create Node Operator` button.
+Set the `Reward Address` field to the `Split` contract address and the `Manager Address` field to the `Safe` wallet address. **Make sure you select the `Extended` option before creating the operator, otherwise the reward address will have ultimate control over the node operator, and since this is a simple splitter contract, you won't be able to make any changes to the operator, as this contract has no signing capabilities.** Check that the correct addresses are set and click the `Create Node Operator` button.
 
 ![image](https://hackmd.io/_uploads/rk_kRauekg.png)
 
