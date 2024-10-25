@@ -258,6 +258,8 @@ Click on the `Offline` button.
 
 On the next screen select the number of validators the cluster will be running, set the `Withdrawal Address` to Lido's `Withdrawal Vault` - `0xF0179dEC45a37423EAD4FaD5fCb136197872EAd9` as per Lido [documentation](https://docs.lido.fi/deployed-contracts/holesky/) and click on the `Confirm` button next to it.
 
+*Note: The mainnet `Withdrawal Vault`  addresses is `0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f` ([source](https://docs.lido.fi/deployed-contracts))*
+
 ![image](https://hackmd.io/_uploads/HJjhgd6pC.png)
 
 Once confirmed, select the operating system and copy the `DKG ceremony` command. The command can be executed on any machine with `Docker` installed. 
@@ -325,6 +327,8 @@ The last step would be to set the cluster fee recipient to Lido's `Execution Lay
 ![image](https://hackmd.io/_uploads/BkKHxcT6C.png)
 
 Set the `Fee Recipient Address` field to `0xE73a3602b99f1f913e72F8bdcBC235e206794Ac8` as per Lido [documentation](https://docs.lido.fi/deployed-contracts/holesky/) and click the `Update` button.
+
+*Note: The mainnet `Fee Recipient` address is `0x388C818CA8B9251b393131C08a736A67ccB19297` ([source](https://docs.lido.fi/deployed-contracts))*
 
 ![image](https://hackmd.io/_uploads/BJcGWcTTC.png)
 
@@ -408,19 +412,19 @@ And pastes it into the Safe `WalletConnect` screen.
 
 He clicks on the `Create Node Operator` button...
 
-![image](https://hackmd.io/_uploads/BkVsfpr2R.png)
+![image](https://hackmd.io/_uploads/H1g_Q0dlyl.png)
 
 Pastes the contents of the `deposit-data.json` file into the `Upload deposit data` field. There should be enough ETH/stETH/wstETH deposited in the cluster Safe to cover the bond.
 
-![image](https://hackmd.io/_uploads/BJG44pH30.png)
+![image](https://hackmd.io/_uploads/rkRYzRuxkg.png)
 
 Expand the `Specify custom addresses` section...
 
-![image](https://hackmd.io/_uploads/r1z4X6Bh0.png)
+![image](https://hackmd.io/_uploads/Syj0MCOeyg.png)
 
 Set the `Reward Address` field to the `Split` contract address and the `Manager Address` field to the `Safe` wallet address. Check that the correct addresses are set and click the `Create Node Operator` button.
 
-![image](https://hackmd.io/_uploads/Hkh34aBh0.png)
+![image](https://hackmd.io/_uploads/rk_kRauekg.png)
 
 Sign the transaction in the safe and share it with the rest of the cluster members.
 
