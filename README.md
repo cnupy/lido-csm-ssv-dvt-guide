@@ -20,7 +20,7 @@ Creating a trust-minimised distributed Valdator cluster requires a multi-sig wal
 
 ## The SSV client
 
-`ssvnode` is the software that allows validators to be run on a group of independent nodes - a cluster. A complete multi-container `Docker` setup including execution client, consensus client, MEV-Boost and the `ssvnode` client can be found in this repository https://github.com/eth-educators/eth-docker and the first step is to clone it:
+`ssvnode` is the software that allows validators to be run on a group of independent nodes - a cluster. A complete multi-container `Docker` setup including execution client, consensus client, MEV-Boost and the `ssvnode` client can be found in this ETH Docker repository https://github.com/eth-educators/eth-docker and the first step is to clone it:
 
 ```
 cd ~ && git clone https://github.com/eth-educators/eth-docker.git && cd eth-docker
