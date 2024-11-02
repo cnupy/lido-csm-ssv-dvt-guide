@@ -442,6 +442,16 @@ Once the signature threshold has been reached and the transaction has been execu
 
 You can follow [this](https://dvt-homestaker.stakesaurus.com/bonded-validators-setup/lido-csm/monitoring-and-address-management) guide for the steps required to monitor your CSM operator.
 
+## Claiming Rewards
+
+There are two types of rewards in CSM: bond rewards and operator rewards. The bond in Lido CSM is held in stETH and stETH being a rabasing token changes it's balance (most likely increasing) once a day. Operator rewards come from operating the node and include a share of the execution layer and consensus layer rewards. They are socialised across all operators and are awarded when the operator performs above a certain threshold, calculated every 7 days on the Holesky testnet and every 28 days on Mainnet.
+
+To claim your rewards, go to the `Bond & Rewards` menu and select the `Claim` tab.
+
+***WARNING:* Make sure you claim your rewards in `wstETH` (Wrapped Staked Ether), this is the only token compatible with the Split contract. When you request `ETH`, you will receive an NFT representing the withdrawal claim, which the Splitter contract cannot distribute. `stETH` is a rebasing token and when the supply decreases or increases, either not all recipients will be able to withdraw their share, or the yield will be stuck in Split. More information can be found in the [splits.org](https://docs.splits.org/core/split-v2) documentation.**
+
+![image](https://hackmd.io/_uploads/ryl8-lVbyx.png)
+
 ## Exiting Validators
 
 You can use the [SSV](https://app.ssv.network/) web app to exit the validators.
