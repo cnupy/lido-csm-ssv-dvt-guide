@@ -20,10 +20,10 @@ Creating a trust-minimised distributed Valdator cluster requires a multi-sig wal
 
 ## The SSV client
 
-`ssvnode` is the software that allows validators to be run on a group of independent nodes - a cluster. A complete multi-container `Docker` setup including execution client, consensus client, MEV-Boost and the `ssvnode` client can be found in this repository https://github.com/cnupy/ssv-validator-node and the first step is to clone it:
+`ssvnode` is the software that allows validators to be run on a group of independent nodes - a cluster. A complete multi-container `Docker` setup including execution client, consensus client, MEV-Boost and the `ssvnode` client can be found in this ETH Docker repository https://github.com/eth-educators/eth-docker and the first step is to clone it:
 
 ```
-git clone https://github.com/cnupy/ssv-validator-node.git
+cd ~ && git clone https://github.com/eth-educators/eth-docker.git && cd eth-docker
 ```
 
 Make sure your user has the `docker` role. If not you can use this command to add it:
@@ -34,45 +34,52 @@ sudo usermod -a -G docker $USER
 
 You will then need to exit the ssh session and log in again.
 
-Finally, you will need to create the `.env` configuration file:
+Install ETH Docker.
 
 ```
-cd ssv-validator-node
-cp .env.sample .env
+cd eth-docker
+./ethd install
 ```
 
-Edit the `.env` in your favourite editor and set the variable `NETWORK=holesky`.
-
-## Generating Operator Keys
-
-All cluster members will need an encrypted key pair to run their node. To create the operator key pair the operator first generates an encryption password:
+Enable ethd to be called from anywhere on your terminal.
 
 ```
-mkdir secrets
-tr -dc 'A-Za-z0-9' </dev/urandom | head -c 16 >> secrets/password
+source ~/.profile
 ```
-
-And then execute this code to generate the key:
+Next, configure the ETH Docker service. **Tip:** You can now call ethd from anywhere in your machine.
 
 ```
-touch secrets/encrypted_private_key.json
-docker compose run --rm ssv-node \
-/go/bin/ssvnode \
-generate-operator-keys \
--p password
+ethd config
 ```
+**Follow along the prompts in the terminal UI (TUI) to:**
 
-![image](https://hackmd.io/_uploads/HJNmMFVpA.png)
+- Choose `Holešovice Testnet` >> `SSV node - consensus, execution and ssv-node`
+- Select `yes` for _Do you want to participate in DKG ceremonies as an operator_?
+- Once you see the screen below, select `<Cancel>` as we don't have our Operator ID yet.
 
-To view the public key use this command:
+![image](https://github.com/user-attachments/assets/b0dab641-8e46-4e04-af8d-585e50ba3fc8)
+
+**Then copy your SSV node public key from your terminal output and save it on a text editor**
+
+![image](https://github.com/user-attachments/assets/b9dd7f94-e765-4696-b183-9c531cccd7a7)
+
+To re-print your SSV public key again, use this command:
 
 ```
+sudo apt install jq
 cat secrets/encrypted_private_key.json | jq .pubKey
 ```
 
 ![image](https://hackmd.io/_uploads/HJWsJoppA.png)
 
 **At this point, each operator must make a backup of the `encrypted_private_key.json` and the `password` files!**
+
+This is the most secure method but requires having SSH access to your server from your laptop's terminal (i.e., after manually adding SSH public keys to your server).
+
+```
+scp -i PATH_TO_SSH_PRIVATE_KEY -r $USER@EXTERNAL_IP_ADDRESS:~/eth-docker/ssv-config $HOME/Documents
+```
+Transfer this `ssv-config` folder into a USB drive for offline storage and completely remove the copy on your laptop.
 
 ## Creating the DV cluster wallet
 
@@ -156,14 +163,24 @@ Enter the address of the `Safe` wallet, click on the `Add Addresses` button and 
 
 ## Running the Distributed Key Generation (DKG) service endpoint.
 
-To run DKG each operator must enable the `ssv-dkg` service for their node. To do so each cluster member should first set their operator ID in the `.env` file.
+### Complete ETH Docker Setup
+Go back to the terminal of your server.
+```
+ethd config
+```
+- Choose `Holešovice Testnet` >> `SSV node - consensus, execution and ssv-node`
+- Select `yes` for _Do you want to participate in DKG ceremonies as an operator?_
+- Because you now have your SSV Operator ID, you can paste it in the requested field
+- Select the consensus and execution client of your choice
+- Use the provided URL for Checkpoint Sync, select yes for MEV Boost, yes for Grafana dashboards
+- Set Rewards Address to the Lido Execution Layer Rewards Vault on Holesky: `0xE73a3602b99f1f913e72F8bdcBC235e206794Ac8`
+- Use default Graffiti
+- Select `No` for generate validator keys
 
-```SSV_OPERATOR_ID=1234```
-
-Finally, start the service using this command:
+Start ETH Docker to start the DKG service.
 
 ```
-docker compose up -d ssv-dkg
+ethd up
 ```
 
 ### Sharing the DKG service - Option 1
@@ -346,14 +363,15 @@ MEV stands for Maximal Extractable Value. This is the additional value that can 
 
 ### Configuring the MEV-boost client
 
-To configure MEV-boost each cluster memeber needs to edit the `.env` file and set the `BUILDER_API_ENABLED=true` and `MEVBOOST_RELAYS=` to the URL of at least one of Lido's approved MEV relays [here](https://enchanted-direction-844.notion.site/6d369eb33f664487800b0dedfe32171e?v=985cb7e521de43d78c67b7ad29adec84). Multiple relays must be separated by a comma. **The use of unapproved relays is strictly forbidden! All cluster members must use identical configurations (same relays) to avoid missing block proposals due to a lack of consensus!**
+To configure MEV-boost each cluster memeber needs to edit the `.env` file and set `MEVBOOST_RELAYS=` to the URL of at least one of Lido's approved MEV relays [here](https://enchanted-direction-844.notion.site/6d369eb33f664487800b0dedfe32171e?v=985cb7e521de43d78c67b7ad29adec84). Multiple relays must be separated by a comma. **The use of unapproved relays is strictly forbidden! All cluster members must use identical configurations (same relays) to avoid missing block proposals due to a lack of consensus!**
 
 ## Starting the Node
 
-Each cluster member should start the node with the following command:
+Each cluster member should start the node with the following commands. We are restarting ETH Docker to apply the changes made to the `.env` file around MEV Boost relays above.:
 
 ```
-docker compose up -d
+ethd down
+ethd up
 ```
 
 At this point, execution and consensus clients should start syncing, and the `SSV` client should start waiting for the validators to be activated. 
@@ -398,7 +416,7 @@ cat merge-output/deposit_data-yyyy-MM-ddThh-mm-ssZ.json \
 
 ## Deploy the keys to Lido CSM
 
-One of the cluster members opens the Lido CSM widget using this address https://csm.testnet.fi/?mode=extended. Note the `mode=extended` parameter. This allows the Lido CSM reward address to be set to the split contract created earlier. He connects the cluster Safe to the widget using `WalletConnect`.
+One of the cluster members opens the Lido CSM widget using this URL https://csm.testnet.fi. He connects the cluster Safe to the widget using `WalletConnect`.
 
 ![image](https://hackmd.io/_uploads/HkNhlaHhA.png)
 
